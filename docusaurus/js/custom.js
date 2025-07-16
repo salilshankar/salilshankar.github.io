@@ -12,7 +12,7 @@ function tryToBindButton(retries = 10) {
       output.textContent = "⏳ Fetching data...";
 
       try {
-        const response = await fetch(`http://192.168.50.74:5000/api/people`);
+        const response = await fetch(`https://jsonplaceholder.typicode.com/todos/1`);
         const data = await response.json();
         output.textContent = JSON.stringify(data, null, 2);
         console.log("✅ Data received", data);
