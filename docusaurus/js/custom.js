@@ -7,36 +7,14 @@ function tryToBindButton(retries = 10) {
   if (button && output) {
     console.log("✅ Found button and output, binding click");
 
-    let visible = false;
-    let dataFetched = false;
-    let cachedData = "";
-
     button.addEventListener("click", async () => {
-      if (visible) {
-        output.style.display = "none";
-        button.textContent = "▶️ Run Code";
-        visible = false;
-        return;
-      }
-
-      output.style.display = "block";
-      button.textContent = "🙈 Hide Output";
-      visible = true;
-
-      if (dataFetched) {
-        output.textContent = cachedData;
-        return;
-      }
-
+      console.log("🖱 Button clicked");
       output.textContent = "⏳ Fetching data...";
 
       try {
-        const response = await fetch("https://jsonplaceholder.typicode.com/todos/1");
+        const response = await fetch(`http://192.168.50.74:5000/api/people`);
         const data = await response.json();
-        cachedData = JSON.stringify(data, null, 2);
-        output.textContent = cachedData;
-        output.style.whiteSpace = "pre-wrap";
-        dataFetched = true;
+        output.textContent = JSON.stringify(data, null, 2);
         console.log("✅ Data received", data);
       } catch (err) {
         output.textContent = `❌ Error: ${err}`;
@@ -53,4 +31,4 @@ function tryToBindButton(retries = 10) {
   }
 }
 
-setTimeout(tryToBindButton, 0);
+window.tryToBindButton = tryToBindButton;
